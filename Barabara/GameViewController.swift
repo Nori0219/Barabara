@@ -77,7 +77,39 @@ class GameViewController: UIViewController {
         }
         
         resultLabel.text = "Score:　" + String(score)
+        //結果ラベルを表示する
         resultLabel.isHidden = false
+        
+        let highScore1: Int = saveData.integer(forKey: "score1")
+        let highScore2: Int = saveData.integer(forKey: "score2")
+        let highScore3: Int = saveData.integer(forKey: "score3")
+        
+        if score > highScore1 {
+            saveData.set(score, forKey: "score1")
+            saveData.set(highScore1, forKey: "score2")
+            saveData.set(highScore2, forKey: "score3")
+        } else if score > highScore2 {
+            saveData.set(score, forKey: "score2")
+            saveData.set(highScore2, forKey: "score3")
+        } else if score > highScore3 {
+            saveData.set(score, forKey: "score3")
+        }
+        
+        
+    }
+    
+    @IBAction func retry() {
+        score = 1000
+        positionX = [width/2, width/2, width/2]
+        //もしタイマーが動いていなければ
+        if timer.isValid == false {
+            self.start()
+        }
+    }
+    
+    //前の画面に戻るメソッド
+    @IBAction func toTop() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     
